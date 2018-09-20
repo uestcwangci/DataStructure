@@ -1,11 +1,11 @@
-package javastructure.unit3;
+package javastructure.unit3.stack;
 
 import javastructure.unit2.Node;
 
-public class LinlStack implements IStack {
+public class LinkStack implements IStack {
     private Node top;
     //不带头结点
-    public LinlStack() {
+    public LinkStack() {
         top = null;
     }
 
@@ -41,7 +41,7 @@ public class LinlStack implements IStack {
     @Override
     public void push(Object x) throws Exception {
         Node s = new Node(x);
-        s.next = top.next;
+        s.next = top;
         top = s;
     }
     //出栈

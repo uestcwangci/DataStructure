@@ -1,8 +1,14 @@
-package javastructure.unit3;
+package javastructure.unit3.stack;
 
 public class SqStack implements IStack{
     private Object[] stackElem;
     private int top;
+
+    public SqStack() {
+        this.top = 0;
+        int defaultSize = 50;
+        stackElem = new Object[defaultSize];
+    }
 
     public SqStack(int maxSize) {
         this.top = 0;

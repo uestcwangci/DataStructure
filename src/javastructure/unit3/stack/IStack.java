@@ -1,4 +1,4 @@
-package javastructure.unit3;
+package javastructure.unit3.stack;
 
 public interface IStack{
     void clear();
