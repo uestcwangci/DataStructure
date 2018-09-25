@@ -34,16 +34,35 @@ public class LinkQueue implements IQueue {
 
     @Override
     public Object peek() {
-        return null;
+        if (isEmpty()) {
+            return null;
+        } else {
+            return front.data;
+        }
     }
-
+    //入队
     @Override
     public void offer(Object x) throws Exception {
-
+        Node s = new Node(x);
+        if (isEmpty()) {
+            front = rear = s;
+        } else {
+            rear.next = s;
+            rear = s;
+        }
     }
-
+    //出队
     @Override
     public Object poll() {
-        return null;
+        if (isEmpty()) {
+            return null;
+        } else {
+            Node p = front;
+            front = front.next;
+            if (p == rear) {
+                rear = null;
+            }
+            return p.data;
+        }
     }
 }

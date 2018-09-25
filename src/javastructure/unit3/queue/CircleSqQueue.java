@@ -12,7 +12,7 @@ public class CircleSqQueue implements IQueue {
         this.rear = 0;
     }
 
-    public CircleSqQueue(int maxSize) {
+    public  CircleSqQueue(int maxSize) {
         this.queueElem = new Object[maxSize];
         this.front = 0;
         this.rear = 0;
