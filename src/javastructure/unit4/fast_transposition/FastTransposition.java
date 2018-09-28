@@ -53,7 +53,7 @@ public class FastTransposition {
         after.columns = before.rows;
         after.nums = before.nums;
         int[] num;//num[col]表示原始三元表第col列非零元素个数
-        int[] cpot;
+        int[] cpot;//cpot[num]表示第col列第一个非零元素在转置后的位置
         if (before.nums > 0) {
             num = new int[before.columns];
             cpot = new int[before.columns];
@@ -73,7 +73,7 @@ public class FastTransposition {
                 after.data[q].column = before.data[i].row;
                 after.data[q].row = before.data[i].column;
                 after.data[q].value = before.data[i].value;
-                cpot[c]++;
+                cpot[c]++;//起始位置存放后，在此位置+1
             }
         }
         return after;
