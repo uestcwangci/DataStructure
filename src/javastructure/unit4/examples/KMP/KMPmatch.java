@@ -1,4 +1,4 @@
-package javastructure.unit4.KMP;
+package javastructure.unit4.examples.KMP;
 
 public class KMPmatch {
     public static void main(String[] args) {

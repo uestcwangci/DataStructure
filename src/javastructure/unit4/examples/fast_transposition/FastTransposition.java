@@ -1,4 +1,4 @@
-package javastructure.unit4.fast_transposition;
+package javastructure.unit4.examples.fast_transposition;
 
 import javastructure.unit4.SpareMatrix;
 import javastructure.unit4.TripleNode;
