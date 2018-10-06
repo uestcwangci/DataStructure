@@ -1,5 +1,8 @@
 package javastructure.unit4;
 
+import javastructure.unit3.queue.LinkQueue;
+import javastructure.unit4.examples.KMP.bookKMP;
+
 public class SeqString implements IString {
     private char[] strvalue;
     private int curlen;
@@ -48,6 +51,7 @@ public class SeqString implements IString {
         for (int i = 0; i < temp.length; i++) {
             strvalue[i] = temp[i];
         }
+        curlen = newCapacity;
     }
     //返回从begin到end - 1的子串
     @Override
@@ -99,7 +103,17 @@ public class SeqString implements IString {
     //添加str到尾串
     @Override
     public IString concat(IString str) {
-        return null;
+        int totalLen = this.length() + str.length();
+        int len1 = this.length();
+        allocate(totalLen);
+        for (int i = len1; i < totalLen; i++) {
+            try {
+                strvalue[i] = str.charAt(i - len1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return this;
     }
 
     @Override
@@ -121,9 +135,112 @@ public class SeqString implements IString {
         return len1 - len2;//当前n位都相同时，返回字符串长度差
     }
 
+
+    public int count() {
+        int j = 0;
+        for (int i = 0; i < length(); i++) {
+            if (' ' == (strvalue[i]) && i != length() - 1) {
+                j++;
+            }
+        }
+        return j;
+    }
+
+    public SeqString replace(int begin, SeqString s1, SeqString s2) throws Exception {
+        SeqString source = this;
+        SeqString ss = new SeqString("");
+        int index = source.indexOf(s1, begin);
+        while (index != -1) {
+            ss.concat(source.substring(0, index));
+            ss.concat(s2);
+            source = (SeqString) source.substring(index + s1.length(), source.length());
+            index = source.indexOf(s1, 0);
+        }
+        ss.concat(source);
+        return ss;
+
+    }
+
+    public void reverse() {
+        int left = 0;
+        int right = this.length() - 1;
+        for (; left < right; left++, right--) {
+            char temp = strvalue[left];
+            strvalue[left] = strvalue[right];
+            strvalue[right] = temp;
+        }
+    }
+
+    public SeqString deleteallchar(char c) throws Exception {
+        SeqString ss = new SeqString("");//空字串
+        SeqString source = this;
+        SeqString str = new SeqString(String.valueOf(c));
+        int index = -1;
+        while ((index = source.indexOf(str, 0)) != -1) {
+            ss.concat(source.substring(0, index));
+            source = (SeqString) source.substring(index + 1, source.length());
+        }
+        ss.concat(source);
+        return ss;
+    }
+
+    public int stringcount(IString str) throws Exception {
+        int[] index = indexOfKMP(str, 0);
+        return index.length;
+    }
+
+
     @Override
-    public int indexOf(IString str, int begin) {
-        return 0;
+    public int indexOf(IString str, int begin) throws Exception {
+        int[] next = bookKMP.findNextVal(str);
+        int i = begin;
+        int j = 0;
+        while (i < this.length() && j<str.length()) {
+            if (j == -1 || this.charAt(i) == str.charAt(j)) {//j=-1表示S[i]!=T[0] 主串下移一位，从串从0开始
+                i++;
+                j++;
+            } else {
+                j = next[j];
+            }
+        }
+        if (j < str.length()) {
+            return -1;
+        } else {
+            return i - j;
+        }
+    }
+
+    public int[] indexOfKMP(IString str, int begin) throws Exception{
+        int[] indexList;
+        LinkQueue Q = new LinkQueue();
+        int[] next = bookKMP.findNextVal(str);
+        int i = begin;
+        int j = 0;
+        int count = 0;
+        while (i < this.length()) {
+            if (j == -1 || this.charAt(i) == str.charAt(j)) {//j=-1表示S[i]!=T[0] 主串下移一位，从串从0开始
+                i++;
+                j++;
+            } else {
+                j = next[j];
+            }
+            if (j == str.length()) {
+                Q.offer(i - j);
+                count++;
+                i += j;
+                j = 0;
+            }
+        }
+        if (Q.isEmpty()) {// 未找到
+            return null;
+        } else {
+            indexList = new int[count];
+            int ii = 0;
+            while (!Q.isEmpty()) {
+                indexList[ii++] = (int) Q.poll();
+            }
+            return indexList;
+        }
     }
 
     public void display() {

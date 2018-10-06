@@ -19,5 +19,5 @@ public interface IString {
 
     int compareTo(IString str);
 
-    int indexOf(IString str, int begin);
+    int indexOf(IString str, int begin) throws Exception;
 }

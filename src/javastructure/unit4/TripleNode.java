@@ -14,4 +14,8 @@ public class TripleNode {
     public TripleNode() {
         this(0, 0, 0);
     }
+
+    public void display() {
+        System.out.println("row: " + (this.row + 1) + "\tcolumn: " + (this.column + 1) + "\tvalue: " + this.value);
+    }
 }
