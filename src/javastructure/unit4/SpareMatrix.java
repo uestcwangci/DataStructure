@@ -16,12 +16,36 @@ public class SpareMatrix {
         nums = 0;
     }
 
-    public void printMartrix() {
-        int i;
+
+
+    public SpareMatrix(int[][] mat) {
+        this.rows = mat.length;
+        this.columns = mat[0].length;
+        this.nums = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (mat[i][j] != 0) {
+                    this.nums++;
+                }
+            }
+        }
+        data = new TripleNode[nums];
+        int k = 0;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (mat[i][j] != 0) {
+                    data[k] = new TripleNode(i, j, mat[i][j]);
+                    k++;
+                }
+            }
+        }
+    }
+
+    public void printMatrix() {
         System.out.println("行数：" + rows + ", 列数：" + columns + "， 非零元素个数：" + nums);
         System.out.println("行\t列\t值");
-        for (i = 0; i < nums; i++) {
-            System.out.println(data[i].row + "\t" + data[i].column + "\t" + data[i].value);
+        for (int i = 0; i < nums; i++) {
+            System.out.println((data[i].row) + "\t" + (data[i].column) + "\t" + data[i].value);
         }
     }
 }

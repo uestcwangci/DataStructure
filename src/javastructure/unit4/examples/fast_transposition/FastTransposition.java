@@ -14,10 +14,10 @@ public class FastTransposition {
                 {0, 0, 0, 9, 0, 0}};
         SpareMatrix matrix = ft.createSpMatrix(mat);
         System.out.println("转置前：");
-        matrix.printMartrix();
+        matrix.printMatrix();
         SpareMatrix afterTrans = ft.fastTransposition(matrix);
         System.out.println("转置后：");
-        afterTrans.printMartrix();
+        afterTrans.printMatrix();
 
 
     }

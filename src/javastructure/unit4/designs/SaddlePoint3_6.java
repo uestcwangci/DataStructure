@@ -2,7 +2,7 @@ package javastructure.unit4.designs;
 
 import javastructure.unit4.TripleNode;
 
-public class SaddlePoint3_5 {
+public class SaddlePoint3_6 {
     //找到第i行最大，第j列最小的的数a(ij)
     public static void main(String[] args) {
         int[][] m = new int[][]{
@@ -10,8 +10,8 @@ public class SaddlePoint3_5 {
                 {4,8,3,6},
                 {1,6,1,2},
                 {0,7,8,9}};
-        SaddlePoint3_5 ex3_5 = new SaddlePoint3_5();
-        ex3_5.findSaddle(m);
+        SaddlePoint3_6 ex3_6 = new SaddlePoint3_6();
+        ex3_6.findSaddle(m);
     }
 
     private void findSaddle(int[][] matrix) {
