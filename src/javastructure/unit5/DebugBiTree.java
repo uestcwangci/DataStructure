@@ -50,9 +50,14 @@ public class DebugBiTree {
         //先根+中根创建树
         String preOrder = "ABDEGCFH";
         String inOrder = "DBGEAFHC";
-        BiTree tree1 = new BiTree(preOrder, inOrder, 0, 0, preOrder.length());
+        BiTree tree1 = new BiTree(preOrder, inOrder, 0, 0, preOrder.length(), true);
         System.out.print("后根遍历为：");
         tree1.postRootTraverse();
+        String postOrder = "DGEBHFCA";
+        BiTree tree1Bro = new BiTree(postOrder, inOrder, preOrder.length() - 1, 0, postOrder.length(), false);
+        System.out.println();
+        System.out.print("先根遍历为：");
+        tree1Bro.preRootTraverse();
         //已知空节点建立树
         String preStr = "AB##CD###";
         BiTree tree2 = new BiTree(preStr);

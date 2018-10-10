@@ -19,8 +19,10 @@ public class BiTree {
     public BiTree(BiTreeNode root) {
         this.root = root;
     }
-    //由先根遍历和中根遍历序列创建一棵二叉树的算法
-    public BiTree(String preOrder, String inOrder, int preIndex, int inIndex, int count) {
+
+    //flag = true 由先根遍历和中根遍历序列创建一棵二叉树的算法
+    //flag = false由后根遍历和中根遍历序列创建一棵二叉树的算法
+    public BiTree(String preOrder, String inOrder, int preIndex, int inIndex, int count, Boolean flag1) {
         if (count > 0) {
             char r = preOrder.charAt(preIndex);
             int i = 0;
@@ -30,8 +32,13 @@ public class BiTree {
                 }
             }
             root = new BiTreeNode(r);
-            root.lChild = new BiTree(preOrder, inOrder, preIndex + 1, inIndex, i).root;
-            root.rChild = new BiTree(preOrder, inOrder, preIndex + i + 1, inIndex + i + 1, count - i - 1).root;
+            if (flag1) {
+                root.lChild = new BiTree(preOrder, inOrder, preIndex + 1, inIndex, i, flag1).root;
+                root.rChild = new BiTree(preOrder, inOrder, preIndex + i + 1, inIndex + i + 1, count - i - 1, flag1).root;
+            } else {
+                root.lChild = new BiTree(preOrder, inOrder, preIndex - count + i, inIndex, i, flag1).root;
+                root.rChild = new BiTree(preOrder, inOrder, preIndex - 1, inIndex + i + 1, count - i - 1, flag1).root;
+            }
 
         }
     }
