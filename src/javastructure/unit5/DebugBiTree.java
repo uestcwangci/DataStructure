@@ -1,6 +1,7 @@
 package javastructure.unit5;
 
 import java.lang.reflect.Array;
+import java.util.Stack;
 
 public class DebugBiTree {
     public static void main(String[] args) throws Exception {
@@ -46,8 +47,35 @@ public class DebugBiTree {
         System.out.println(tree.count);
         //深度
         System.out.println("深度:" + tree.getDepth(root));
-
-
+        //先根+中根创建树
+        String preOrder = "ABDEGCFH";
+        String inOrder = "DBGEAFHC";
+        BiTree tree1 = new BiTree(preOrder, inOrder, 0, 0, preOrder.length());
+        System.out.print("后根遍历为：");
+        tree1.postRootTraverse();
+        //已知空节点建立树
+        String preStr = "AB##CD###";
+        BiTree tree2 = new BiTree(preStr);
+        System.out.println();
+        System.out.print("先根遍历：");
+        tree2.preRootTraverse();
+        //完全二叉树
+        String completeStr = "ABCDEFGH";
+        BiTreeNode compleRoot = new BiTree().creatCompleteTree(completeStr, 0);
+        BiTree tree3 = new BiTree(compleRoot);
+        System.out.println();
+        System.out.print("先根：");
+        tree3.preRootTraverse();
+        //双栈实现后根遍历
+        BiTree tree4 = debug.createBiTree();
+        Stack doubleS = tree4.postDoubleStack(tree4.getRoot());
+        System.out.println();
+        while (!doubleS.isEmpty()) {
+            System.out.print(doubleS.pop());
+        }
+        //堆栈实现层次遍历
+        System.out.println();
+        tree.levelStack(root);
     }
 
     private BiTree createBiTree() {

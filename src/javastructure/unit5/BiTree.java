@@ -21,14 +21,45 @@ public class BiTree {
     }
     //由先根遍历和中根遍历序列创建一棵二叉树的算法
     public BiTree(String preOrder, String inOrder, int preIndex, int inIndex, int count) {
+        if (count > 0) {
+            char r = preOrder.charAt(preIndex);
+            int i = 0;
+            for (; i < count; i++) {
+                if (r == inOrder.charAt(i + inIndex)) {
+                    break;
+                }
+            }
+            root = new BiTreeNode(r);
+            root.lChild = new BiTree(preOrder, inOrder, preIndex + 1, inIndex, i).root;
+            root.rChild = new BiTree(preOrder, inOrder, preIndex + i + 1, inIndex + i + 1, count - i - 1).root;
 
+        }
     }
 
+
+
     //由标明空子树的先根遍历序列创建一棵二叉树的算法
-    private static int index = 0;
-
+    public static int index = 0;
     public BiTree(String preStr) {
+        char c = preStr.charAt(index++);
+        if (c != '#') {
+            root = new BiTreeNode(c);
+            root.lChild = new BiTree(preStr).root;
+            root.rChild = new BiTree(preStr).root;
+        } else {
+            root = null;
+        }
+    }
 
+    //完全二叉树建立
+    public BiTreeNode creatCompleteTree(String compleStr, int compleIndex) {
+        BiTreeNode compleRoot = null;
+        if (compleIndex < compleStr.length()) {
+            compleRoot = new BiTreeNode(compleStr.charAt(compleIndex));
+            compleRoot.lChild = creatCompleteTree(compleStr, 2 * compleIndex + 1);
+            compleRoot.rChild = creatCompleteTree(compleStr, 2 * compleIndex + 2);
+        }
+        return compleRoot;
     }
 
     //先根遍历二叉树的递归算法
@@ -201,6 +232,58 @@ public class BiTree {
             root = t.rChild;
         }
         return list;
+    }
+
+    /**
+     * 后根遍历为left,right,root  先根遍历为root,left,right.
+     * 后根遍历的逆序为root,right,left,逆序的存储采用一个新的栈，则栈的输出为left,right,root
+     * @param T 树的根
+     * @return
+     */
+    public Stack postDoubleStack(BiTreeNode T) {
+        Stack<Object> S = new Stack<>();
+        if (T == null) {
+            return null;
+        }
+        root = T;
+        Stack<BiTreeNode> Q = new Stack<>();
+        while (root != null || !Q.isEmpty()) {
+            while (root != null) {
+                Q.push(root);
+                S.push(root.data);//相当于先根遍历的操作
+                root = root.rChild;
+            }
+            if (!Q.isEmpty()) {
+                root = Q.pop();
+                root = root.lChild;
+            }
+        }
+        return S;
+    }
+    //堆栈实现层次遍历
+    public void levelStack(BiTreeNode T) {
+        if (T == null) {
+            return;
+        }
+        root = T;
+        Stack<BiTreeNode> S = new Stack<>();//存储当前层节点
+        Stack<BiTreeNode> Q = new Stack<>();//存储下一层节点
+        S.push(root);
+        while (!S.isEmpty()) {
+            while (!S.isEmpty()) {
+                BiTreeNode temp = S.pop();
+                System.out.print(temp.data);
+                if (temp.lChild != null) {
+                    Q.push(temp.lChild);
+                }
+                if (temp.rChild != null) {
+                    Q.push(temp.rChild);
+                }
+            }
+            while (!Q.isEmpty()) {
+                S.push(Q.pop());
+            }
+        }
     }
 
     public int getDepth(BiTreeNode T) {
