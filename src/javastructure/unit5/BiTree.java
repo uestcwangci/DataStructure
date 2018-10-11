@@ -3,12 +3,11 @@ package javastructure.unit5;
 import javastructure.unit3.queue.LinkQueue;
 import javastructure.unit3.stack.LinkStack;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class BiTree {
     public int count = 0;
+    public int leafNum = 0;
 
     private BiTreeNode root;
 
@@ -44,9 +43,9 @@ public class BiTree {
     }
 
 
-
     //由标明空子树的先根遍历序列创建一棵二叉树的算法
     public static int index = 0;
+
     public BiTree(String preStr) {
         char c = preStr.charAt(index++);
         if (c != '#') {
@@ -77,6 +76,7 @@ public class BiTree {
             preRootTraverse(T.rChild);
         }
     }
+
     //先根遍历二叉树的非递归算法
     public void preRootTraverse() throws Exception {
         BiTreeNode T = root;
@@ -99,6 +99,7 @@ public class BiTree {
         }
 
     }
+
     //中根遍历二叉树的递归算法
     public void inRootTraverse(BiTreeNode T) {
         if (T != null) {
@@ -107,6 +108,7 @@ public class BiTree {
             inRootTraverse(T.rChild);
         }
     }
+
     //中根遍历二叉树的非递归算法
     public void inRootTraverse() throws Exception {
         BiTreeNode T = root;
@@ -126,6 +128,7 @@ public class BiTree {
             }
         }
     }
+
     //后根遍历二叉树的递归算法
     public void postRootTraverse(BiTreeNode T) {
         if (T != null) {
@@ -134,6 +137,7 @@ public class BiTree {
             System.out.print(T.data);
         }
     }
+
     //后根遍历二叉树的非递归算法
     public void postRootTraverse() throws Exception {
         BiTreeNode T = root;
@@ -167,6 +171,7 @@ public class BiTree {
         }
 
     }
+
     //层级遍历二叉树的算法（从左向右）
     public void levelTraverse() throws Exception {
         BiTreeNode T = root;
@@ -223,8 +228,68 @@ public class BiTree {
         }
     }
 
-    public List<Object> traverse(BiTreeNode root){
+    //统计结点数目（递归）
+    public int countLeaf(BiTreeNode T) {
+        if (T != null) {
+            if (T.lChild == null && T.rChild == null) {
+                leafNum++;
+            }
+            countLeaf(T.lChild);
+            countLeaf(T.rChild);
+        }
+        return leafNum;
+    }
+
+    //统计结点数目（非递归）
+    public int countLeaf() {
+        BiTreeNode T = this.root;
+        if (T == null) {
+            return 0;
+        }
+        Stack<BiTreeNode> S = new Stack<>();
+        S.push(T);
+        while (!S.isEmpty()) {
+            T = S.pop();
+            while (T != null) {
+                if (T.lChild == null && T.rChild == null) {
+                    leafNum++;
+                }
+                if (T.rChild != null) {
+                    S.push(T.rChild);
+                }
+                T = T.lChild;
+            }
+        }
+        return leafNum;
+    }
+
+    //从根节点到结点p路径
+    public List<Object> rootToNodeP(Object p) {
+        if (root == null) {
+            return null;
+        }
+        Stack<BiTreeNode> S = new Stack<>();
+        List<Object> L = new ArrayList<>();
+        BiTreeNode T = root;
+        while (!S.isEmpty() || T!=null) {
+            while (T != null) {
+                L.add(T.data);
+                if (T.data.equals(p)) {
+                    return L;
+                }
+                S.push(T);
+                T = T.lChild;
+            }
+            T = S.pop();
+            T = T.rChild;
+        }
+        return L;
+
+    }
+
+    public List<Object> traverse(BiTreeNode T) {
         List<Object> list = new ArrayList<>();
+        root = T;
         if (root == null) {
             return list;
         }
@@ -244,6 +309,7 @@ public class BiTree {
     /**
      * 后根遍历为left,right,root  先根遍历为root,left,right.
      * 后根遍历的逆序为root,right,left,逆序的存储采用一个新的栈，则栈的输出为left,right,root
+     *
      * @param T 树的根
      * @return
      */
@@ -267,6 +333,7 @@ public class BiTree {
         }
         return S;
     }
+
     //堆栈实现层次遍历
     public void levelStack(BiTreeNode T) {
         if (T == null) {

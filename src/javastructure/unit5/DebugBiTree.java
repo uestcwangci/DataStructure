@@ -1,6 +1,8 @@
 package javastructure.unit5;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 public class DebugBiTree {
@@ -81,6 +83,18 @@ public class DebugBiTree {
         //堆栈实现层次遍历
         System.out.println();
         tree.levelStack(root);
+        //叶子结点计数(递归）
+        System.out.println();
+        System.out.print("叶子数为：");
+        tree.leafNum = 0;
+        System.out.println(tree.countLeaf(root));
+        //叶子结点计数（非递归）
+        System.out.print("叶子数为：");
+        tree.leafNum = 0;
+        System.out.println(tree.countLeaf());
+        //从根节点到指定结点p
+        List<Object> l = tree.rootToNodeP('F');
+        System.out.println(l.toString());
     }
 
     private BiTree createBiTree() {
