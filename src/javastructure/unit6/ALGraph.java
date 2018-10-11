@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class ALGraph implements IGraph {
     private GraphKind kind;
     private int vexNum;
-    private int ArcNum;
+    private int arcNum;
     private VNode[] vexs;
 
     public ALGraph() {
@@ -15,7 +15,7 @@ public class ALGraph implements IGraph {
     public ALGraph(GraphKind kind, int vexNum, int arcNum, VNode[] vexs) {
         this.kind = kind;
         this.vexNum = vexNum;
-        this.ArcNum = arcNum;
+        this.arcNum = arcNum;
         this.vexs = vexs;
     }
 
@@ -46,12 +46,12 @@ public class ALGraph implements IGraph {
 
     @Override
     public int getVexNum() {
-        return 0;
+        return vexNum;
     }
 
     @Override
     public int getArcNum() {
-        return 0;
+        return arcNum;
     }
 
     @Override
