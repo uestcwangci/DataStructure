@@ -3,10 +3,16 @@ package javastructure.unit6;
 public class ArcNode {
     public int adjVex;
     public int value;
-    private ArcNode nextArc;
+    public ArcNode nextArc;
 
     public ArcNode() {
         this(-1, 0, null);
+    }
+
+    public ArcNode(int adjVex, int value) {
+        this.adjVex = adjVex;
+        this.value = value;
+        this.nextArc = null;
     }
 
     public ArcNode(int adjVex) {

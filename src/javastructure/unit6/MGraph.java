@@ -1,7 +1,7 @@
 package javastructure.unit6;
 
 import java.util.Scanner;
-
+//图的邻接矩阵
 public class MGraph implements IGraph {
     private static final int INFINITY = Integer.MAX_VALUE;
     private GraphKind kind;
@@ -37,14 +37,34 @@ public class MGraph implements IGraph {
     //创建无向网
     @Override
     public void createUDN() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("请输入图的顶点数、边数：");
-        vexNum = sc.nextInt();
-        arcNum = sc.nextInt();
+//        Scanner sc = new Scanner(System.in);
+//        System.out.println("请输入图的顶点数、边数：");
+//        vexNum = sc.nextInt();
+//        arcNum = sc.nextInt();
+//        vexs = new Object[vexNum];
+//        System.out.println("分别输入各个顶点：");
+//        for (int i = 0; i < vexNum; i++) {
+//            vexs[i] = sc.nextLine();
+//        }
+//        arcs = new int[vexNum][vexNum];
+//        for (int i = 0; i < vexNum; i++) {
+//            for (int j = 0; j < vexNum; j++) {
+//                arcs[i][j] = INFINITY;
+//            }
+//        }
+//        System.out.println("请输入各个边的两个顶点及其权值：");
+//        for (int i = 0; i < arcNum; i++) {
+//            int v = locateVex(sc.nextLine());
+//            int u = locateVex(sc.nextLine());
+//            arcs[u][v] = arcs[v][u] = sc.nextInt();
+//        }
+
+        vexNum = 6;
+        arcNum = 6;
         vexs = new Object[vexNum];
-        System.out.println("分别输入各个顶点：");
+        char c = 'A';
         for (int i = 0; i < vexNum; i++) {
-            vexs[i] = sc.nextLine();
+            vexs[i] = c++;
         }
         arcs = new int[vexNum][vexNum];
         for (int i = 0; i < vexNum; i++) {
@@ -52,17 +72,36 @@ public class MGraph implements IGraph {
                 arcs[i][j] = INFINITY;
             }
         }
-        System.out.println("请输入各个边的两个顶点及其权值：");
-        for (int i = 0; i < arcNum; i++) {
-            int v = locateVex(sc.nextLine());
-            int u = locateVex(sc.nextLine());
-            arcs[u][v] = arcs[v][u] = sc.nextInt();
-        }
+        arcs[0][1] = arcs[1][0] = 10;
+        arcs[0][2] = arcs[2][0] = 2;
+        arcs[1][3] = arcs[3][1] = 7;
+        arcs[1][5] = arcs[5][1] = 5;
+        arcs[3][4] = arcs[4][3] = 2;
+        arcs[4][5] = arcs[5][4] = 5;
+
+
     }
     //创建有向网
     @Override
     public void createDN() {
-
+        vexNum = 4;
+        arcNum = 5;
+        vexs = new Object[vexNum];
+        char c = 'A';
+        for (int i = 0; i < vexNum; i++) {
+            vexs[i] = c++;
+        }
+        arcs = new int[vexNum][vexNum];
+        for (int i = 0; i < vexNum; i++) {
+            for (int j = 0; j < vexNum; j++) {
+                arcs[i][j] = INFINITY;
+            }
+        }
+        arcs[0][1] = 1;
+        arcs[0][2] = 4;
+        arcs[2][3] = 7;
+        arcs[3][0] = 6;
+        arcs[3][2] = 4;
     }
 
     @Override
