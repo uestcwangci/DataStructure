@@ -116,7 +116,7 @@ public class MGraph implements IGraph {
     }
 
     //创建prim图
-    public void createPrim() {
+    public void createPrimGraph() {
         vexNum = 6;
         arcNum = 10;
         vexs = new Object[vexNum];
