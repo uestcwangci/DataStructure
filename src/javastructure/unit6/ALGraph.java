@@ -228,4 +228,20 @@ public class ALGraph implements IGraph {
             return -1;
         }
     }
+
+    public void insertArc(int u, int v) {//在u，v之间插入一条弧
+        ArcNode arcNode = new ArcNode(v, 1);
+        arcNode.nextArc = vexs[u].firstArc;
+        vexs[u].firstArc = arcNode;
+    }
+
+    public void deleteArc(int u, int v) throws Exception {//在u，v之间删除一条弧
+        for (ArcNode arc = vexs[u].firstArc; arc != null; arc = arc.nextArc) {
+            if (arc.adjVex == v) {
+                arc.adjVex = arc.nextArc.adjVex;
+            }
+        }
+        throw new Exception(u + " " + v + "之间无连接");
+
+    }
 }

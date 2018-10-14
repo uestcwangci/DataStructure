@@ -24,10 +24,11 @@ public class DebugGraph {
         ALGraph alGraph1 = new ALGraph();
         alGraph1.createCircleUDG();
         alGraph1.displaySeq();
-        for (int i = 0; i < alGraph.getVexNum(); i++) {
+        for (int i = 0; i < alGraph1.getVexNum(); i++) {
             alGraph1.isVisited[i] = false;
         }
-        alGraph1.hasPath('B', 'D');
+        alGraph1.hasPath('B', 'G');
+        alGraph.displaySeq();
     }
 
     private static void BFSTraverse(IGraph G) throws Exception {
