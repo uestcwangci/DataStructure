@@ -5,7 +5,7 @@ import java.util.Scanner;
 public interface IGraph {
     default void createGraph(){
         Scanner sc = new Scanner(System.in);
-        System.out.print("请输入图的类型（UDG, DG, UDN, DND):");
+        System.out.print("请输入图的类型（UDG, DG, UDN, UND):");
         GraphKind kind = GraphKind.valueOf(sc.nextLine());
         switch (kind) {
             case DG:

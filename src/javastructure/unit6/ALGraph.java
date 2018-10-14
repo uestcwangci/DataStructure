@@ -24,11 +24,38 @@ public class ALGraph implements IGraph {
 
     @Override
     public void createUDG() {
-
+        vexNum = 5;
+        arcNum = 5;
+        vexs = new VNode[vexNum];
+        char c = 'A';
+        for (int i = 0; i < vexNum; i++) {
+            vexs[i] = new VNode(c++);
+        }
+        addArc(0, 1, 1);
+        addArc(1, 0, 1);
+        addArc(1, 2, 1);
+        addArc(2, 1, 1);
+        addArc(1, 4, 1);
+        addArc(4, 1, 1);
+        addArc(2, 3, 1);
+        addArc(3, 2, 1);
+        addArc(3, 4, 1);
+        addArc(4, 3, 1);
     }
 
     @Override
     public void createDG() {
+        vexNum = 5;
+        arcNum = 4;
+        vexs = new VNode[vexNum];
+        char c = 'A';
+        for (int i = 0; i < vexNum; i++) {
+            vexs[i] = new VNode(c++);
+        }
+        addArc(0, 1, 1);
+        addArc(0, 2, 1);
+        addArc(3, 0, 1);
+        addArc(3, 4, 1);
 
     }
 
@@ -39,7 +66,7 @@ public class ALGraph implements IGraph {
         vexs = new VNode[vexNum];
         char c = 'A';
         for (int i = 0; i < vexNum; i++) {
-            vexs[i].data = c++;
+            vexs[i] = new VNode(c++);
         }
         addArc(0, 1, 10);
         addArc(1, 0, 10);
@@ -63,7 +90,7 @@ public class ALGraph implements IGraph {
         vexs = new VNode[vexNum];
         char c = 'A';
         for (int i = 0; i < vexNum; i++) {
-            vexs[i].data = c++;
+            vexs[i] = new VNode(c++);
         }
 
         addArc(0, 1, 1);
@@ -109,10 +136,16 @@ public class ALGraph implements IGraph {
         }
         return -1;
     }
-
+    //查找第v个节点的第一个邻接点
     @Override
     public int firstAdjVex(int v) throws Exception {
-        return 0;
+        if (v < 0 || v >= vexNum) {
+            throw new Exception("第" + v + "个顶点不存在");
+        }
+        if (vexs[v].firstArc != null) {
+            return vexs[v].firstArc.adjVex;
+        }
+        return -1;
     }
 
     @Override

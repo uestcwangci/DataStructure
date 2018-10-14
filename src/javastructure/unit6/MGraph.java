@@ -25,12 +25,47 @@ public class MGraph implements IGraph {
 
     @Override
     public void createUDG() {
+        vexNum = 5;
+        arcNum = 5;
+        vexs = new Object[vexNum];
+        char c = 'A';
+        for (int i = 0; i < vexNum; i++) {
+            vexs[i] = c++;
+        }
+        arcs = new int[vexNum][vexNum];
+        for (int i = 0; i < vexNum; i++) {
+            for (int j = 0; j < vexNum; j++) {
+                arcs[i][j] = INFINITY;
+            }
+        }
+        arcs[0][1] = arcs[1][0] = 1;
+        arcs[1][2] = arcs[2][1] = 1;
+        arcs[1][4] = arcs[4][1] = 1;
+        arcs[2][3] = arcs[3][2] = 1;
+        arcs[3][4] = arcs[4][3] = 1;
+
 
     }
 
     @Override
     public void createDG() {
-
+        vexNum = 5;
+        arcNum = 4;
+        vexs = new Object[vexNum];
+        char c = 'A';
+        for (int i = 0; i < vexNum; i++) {
+            vexs[i] = c++;
+        }
+        arcs = new int[vexNum][vexNum];
+        for (int i = 0; i < vexNum; i++) {
+            for (int j = 0; j < vexNum; j++) {
+                arcs[i][j] = INFINITY;
+            }
+        }
+        arcs[0][1] = 1;
+        arcs[0][2] = 1;
+        arcs[3][0] = 1;
+        arcs[3][4] = 1;
     }
 
 
@@ -78,9 +113,36 @@ public class MGraph implements IGraph {
         arcs[1][5] = arcs[5][1] = 5;
         arcs[3][4] = arcs[4][3] = 2;
         arcs[4][5] = arcs[5][4] = 5;
-
-
     }
+
+    //创建prim图
+    public void createPrim() {
+        vexNum = 6;
+        arcNum = 10;
+        vexs = new Object[vexNum];
+        char c = 'A';
+        for (int i = 0; i < vexNum; i++) {
+            vexs[i] = c++;
+        }
+        arcs = new int[vexNum][vexNum];
+        for (int i = 0; i < vexNum; i++) {
+            for (int j = 0; j < vexNum; j++) {
+                arcs[i][j] = INFINITY;
+            }
+        }
+        arcs[0][1] = arcs[1][0] = 7;
+        arcs[0][2] = arcs[2][0] = 1;
+        arcs[0][3] = arcs[3][0] = 5;
+        arcs[1][2] = arcs[2][1] = 6;
+        arcs[1][4] = arcs[4][1] = 3;
+        arcs[2][3] = arcs[3][2] = 7;
+        arcs[2][4] = arcs[4][2] = 6;
+        arcs[2][5] = arcs[5][2] = 4;
+        arcs[3][5] = arcs[5][3] = 2;
+        arcs[4][5] = arcs[5][4] = 7;
+    }
+
+
     //创建有向网
     @Override
     public void createDN() {
