@@ -29,6 +29,12 @@ public class DebugGraph {
         }
         alGraph1.hasPath('B', 'G');
         alGraph.displaySeq();
+        alGraph.insertArc(0, 3);
+        alGraph.displaySeq();
+//        alGraph.deleteArc(0, 1);
+        alGraph.deleteArc(0, 3);
+        alGraph.deleteArc(0, 1);
+        alGraph.displaySeq();
     }
 
     private static void BFSTraverse(IGraph G) throws Exception {

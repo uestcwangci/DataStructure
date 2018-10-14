@@ -2,7 +2,10 @@ package javastructure.unit6;
 
 import javafx.scene.shape.Arc;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class ALGraph implements IGraph {
     private GraphKind kind;
@@ -135,23 +138,33 @@ public class ALGraph implements IGraph {
 
     public void displaySeq() throws Exception {
         isVisited = new boolean[vexNum];
-        int count = 1;
         for (int i = 0; i < vexNum; i++) {
             isVisited[i] = false;
         }
+        Queue<Integer> Q = new LinkedList<>();
+        Queue<Object> P = new LinkedList<>();
+        int count = 0;
         for (int i = 0; i < vexNum; i++) {
+            P.clear();
             if (!isVisited[i]) {
-                System.out.println();
-                System.out.println("第" + (count++) + "个连通分支：");
-                System.out.print(getVex(i) + " ");
+                P.offer(getVex(i));
+                Q.offer(i);
                 isVisited[i] = true;
-                for (ArcNode arcNode = vexs[i].firstArc; arcNode != null; arcNode = arcNode.nextArc) {
-                    int k = arcNode.adjVex;
-                    if (!isVisited[k]){
-                        System.out.print(vexs[k].data + " ");
-                        isVisited[k] = true;
+                while (!Q.isEmpty()) {
+                    int u = Q.poll();
+                    for (int w = firstAdjVex(u); w >= 0; w = nextAdjVex(u, w)) {
+                        if (!isVisited[w]) {
+                            isVisited[w] = true;
+                            P.offer(getVex(w));
+                            Q.offer(w);
+                        }
                     }
                 }
+                System.out.println("第" + ++count + "个连通分量：");
+                while (!P.isEmpty()) {
+                    System.out.print(P.poll() + " ");
+                }
+                System.out.println();
             }
         }
     }
@@ -236,12 +249,22 @@ public class ALGraph implements IGraph {
     }
 
     public void deleteArc(int u, int v) throws Exception {//在u，v之间删除一条弧
-        for (ArcNode arc = vexs[u].firstArc; arc != null; arc = arc.nextArc) {
+        ArcNode preArc = null;
+        ArcNode arc = vexs[u].firstArc;
+        for (; arc != null; arc = arc.nextArc) {
             if (arc.adjVex == v) {
-                arc.adjVex = arc.nextArc.adjVex;
+                break;
             }
+            preArc = arc;
+            arc.adjVex = arc.nextArc.adjVex;
         }
-        throw new Exception(u + " " + v + "之间无连接");
-
+        if (arc == null) {
+            throw new Exception("删除的边不存在");
+        }
+        if (preArc == null) {//删除的边在头结点
+            vexs[u].firstArc = vexs[u].firstArc.nextArc;
+        } else {
+            preArc.nextArc = arc.nextArc;
+        }
     }
 }
