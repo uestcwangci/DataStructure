@@ -19,6 +19,15 @@ public class DebugGraph {
         DFSTraverse(mGraph);
         System.out.println();
         DFSTraverse(alGraph);
+        System.out.println();
+        System.out.println("***********************");
+        ALGraph alGraph1 = new ALGraph();
+        alGraph1.createCircleUDG();
+        alGraph1.displaySeq();
+        for (int i = 0; i < alGraph.getVexNum(); i++) {
+            alGraph1.isVisited[i] = false;
+        }
+        alGraph1.hasPath('B', 'D');
     }
 
     private static void BFSTraverse(IGraph G) throws Exception {

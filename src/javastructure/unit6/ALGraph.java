@@ -9,6 +9,7 @@ public class ALGraph implements IGraph {
     private int vexNum;
     private int arcNum;
     private VNode[] vexs;
+    boolean[] isVisited;
 
     public ALGraph() {
         this(null, 0, 0, null);
@@ -61,8 +62,8 @@ public class ALGraph implements IGraph {
 
     @Override
     public void createUDN() {
-        vexNum = 6;
-        arcNum = 6;
+        vexNum = 7;
+        arcNum = 7;
         vexs = new VNode[vexNum];
         char c = 'A';
         for (int i = 0; i < vexNum; i++) {
@@ -82,6 +83,7 @@ public class ALGraph implements IGraph {
         addArc(5, 4, 5);
 
     }
+
 
     @Override
     public void createDN() {
@@ -107,6 +109,65 @@ public class ALGraph implements IGraph {
         vexs[v].firstArc = arc;
     }
 
+    public void createCircleUDG() {
+        vexNum = 7;
+        arcNum = 6;
+        vexs = new VNode[vexNum];
+        char c = 'A';
+        for (int i = 0; i < vexNum; i++) {
+            vexs[i] = new VNode(c++);
+        }
+        addArc(0, 1, 1);
+        addArc(1, 0, 1);
+        addArc(0, 2, 1);
+        addArc(2, 0, 1);
+        addArc(0, 3, 1);
+        addArc(3, 0, 1);
+        addArc(2, 3, 1);
+        addArc(3, 2, 1);
+        addArc(4, 5, 1);
+        addArc(5, 4, 1);
+        addArc(4, 6, 1);
+        addArc(6, 4, 1);
+        addArc(5, 6, 1);
+        addArc(6, 5, 1);
+    }
+
+    public void displaySeq() throws Exception {
+        isVisited = new boolean[vexNum];
+        int count = 1;
+        for (int i = 0; i < vexNum; i++) {
+            isVisited[i] = false;
+        }
+        for (int i = 0; i < vexNum; i++) {
+            if (!isVisited[i]) {
+                System.out.println();
+                System.out.println("第" + (count++) + "个连通分支：");
+                System.out.print(getVex(i) + " ");
+                isVisited[i] = true;
+                for (ArcNode arcNode = vexs[i].firstArc; arcNode != null; arcNode = arcNode.nextArc) {
+                    int k = arcNode.adjVex;
+                    if (!isVisited[k]){
+                        System.out.print(vexs[k].data + " ");
+                        isVisited[k] = true;
+                    }
+                }
+            }
+        }
+    }
+
+    public void hasPath(Object u, Object v) throws Exception {
+        int k = locateVex(u);
+        int l = locateVex(v);
+        isVisited[k] = true;
+        for (int w = firstAdjVex(k); w >= 0; w = nextAdjVex(k, w)) {
+            if (w == l) {
+                System.out.println("存在");
+            } else if (!isVisited[w]) {
+                hasPath(getVex(w), v);
+            }
+        }
+    }
 
     @Override
     public int getVexNum() {
