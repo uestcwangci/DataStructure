@@ -21,7 +21,8 @@ public class DebugSort {
 //        debug.selectSort(unSort1);
 //        debug.siftHeap(heap1, 0, heap1.length - 1);
 //        System.out.println(Arrays.toString(debug.createHeap(unSort1)));
-        debug.heapSort(unSort1);
+//        debug.heapSort(unSort1);
+        debug.mergeSort(unSort1);
     }
 
     public void insertSortWithGuard(int[] a) {
@@ -172,7 +173,7 @@ public class DebugSort {
     //生成堆
     public int[] createHeap(int[] a) {
         int n = a.length;
-        int i, j, temp;
+        int i;
         for (i = n / 2 - 1; i >= 0; i--) {
             siftHeap(a, i, n - 1);
 //            temp = a[i];
@@ -207,6 +208,54 @@ public class DebugSort {
             siftHeap(heap, 0, i - 1);
         }
         System.out.println(Arrays.toString(heap));
+    }
+
+    public void merge(int[] a, int[] order, int h, int m, int t) {
+        int i = h, j = m + 1, k = h;
+        while (i <= m && j <= t) {
+            if (a[i] < a[j]) {
+                order[k++] = a[i++];
+            } else {
+                order[k++] = a[j++];
+            }
+        }
+        while (i <= m) {
+            order[k++] = a[i++];
+        }
+        while (j <= t) {
+            order[k++] = a[j++];
+        }
+    }
+
+    public void mergePass(int[] a, int[] order, int s, int n) {
+        int p = 0;
+        while (p + 2 * s - 1 <= n - 1) {
+            merge(a, order, p, p + s - 1, p + 2 * s - 1);
+            p += 2 * s;
+        }
+        if (p + s - 1 < n - 1) {
+            merge(a, order, p, p + s - 1, n - 1);
+        } else {
+            for (int i = p; i < n; i++) {
+                order[i] = a[i];
+            }
+        }
+    }
+
+    public void mergeSort(int[] a) {
+        System.out.println(Arrays.toString(a));
+        System.out.println("归并排序：");
+        int s = 1;//初始长度设为1
+        int n = a.length;
+        int[] temp = new int[n];
+        while (s < n) {
+            mergePass(a, temp, s, n);
+            s *= 2;
+            mergePass(temp, a, s, n);
+            s *= 2;
+        }
+        System.out.println(Arrays.toString(a));
+        System.out.println(Arrays.toString(temp));
     }
 
 
