@@ -10,6 +10,7 @@ public class SortWork {
     public static void main(String[] args) {
         SortWork work = new SortWork();
         int[] guard = {-1, 50, 40, 95, 20, 15, 70, 60, 45, 85, 3};
+        int[] a = {50, 40, 95, 20, 15, 70, 60, 45, 85, 3};
         work.insertSortWithGuard(guard);
         createStudentList();
         System.out.println("排序前：");
@@ -23,6 +24,7 @@ public class SortWork {
         work.heapSort(scores);
         System.out.println("排序后：");
         sortByScore();
+        work.myMergeSort(a);
     }
 
     public void insertSortWithGuard(int[] a) {
@@ -103,5 +105,55 @@ public class SortWork {
             siftHeap(heap, 0, k - 1);
         }
 //        System.out.println(Arrays.toString(heap));
+    }
+
+    public void myMerge(int[] a, int[] order, int p, int m, int t) {
+        int i = p;
+        int j = m;
+        int k = p;
+        while (i < m && j <= t) {
+            if (a[i] < a[j]) {
+                order[k++] = a[i++];
+            } else {
+                order[k++] = a[j++];
+            }
+        }
+        while (i < m) {
+            order[k++] = a[i++];
+        }
+        while (j <= t) {
+            order[k++] = a[j++];
+        }
+//        System.out.println(Arrays.toString(order));
+    }
+
+    public void myMergePass(int[] a, int[] order, int n, int s) {//s为归并序列的长度，n为序列最后一个位置
+        int p = 0;
+        while (p + 2 * s - 1 <= n) {
+            myMerge(a, order, p, p + s, p + 2 * s - 1);
+            p = p + 2 * s;
+        }
+        if (p + s <= n) {
+            myMerge(a, order, p, p + s, n);
+        } else {
+            while (p <= n) {
+                order[p] = a[p];
+                p++;
+            }
+        }
+    }
+
+    public void myMergeSort(int[] a) {
+        int s = 1;
+        int n = a.length;
+        int[] order = new int[n];
+        while (s < n) {
+            myMergePass(a, order, n - 1, s);
+            s *= 2;
+            myMergePass(order, a, n - 1, s);
+            s *= 2;
+        }
+        System.out.println(Arrays.toString(order));
+        System.out.println(Arrays.toString(a));
     }
 }
